@@ -10177,6 +10177,22 @@ WorldMorph.prototype.doOneCycle = function () {
     this.updateBroken();
 };
 
+
+// resizes the world to fill a certain width and height.
+WorldMorph.prototype.resize = function (clientWidth, clientHeight) {
+    var pos = getDocumentPositionOf(this.worldCanvas)
+    
+    if (this.worldCanvas.width !== clientWidth) {
+        this.worldCanvas.width = clientWidth;
+        this.setWidth(clientWidth);
+    }
+    if (this.worldCanvas.height !== clientHeight) {
+        this.worldCanvas.height = clientHeight;
+        this.setHeight(clientHeight);
+    }
+    this.resizeChildren();    
+};
+
 WorldMorph.prototype.fillPage = function () {
     var pos = getDocumentPositionOf(this.worldCanvas),
         clientHeight = window.innerHeight,
@@ -10208,12 +10224,11 @@ WorldMorph.prototype.fillPage = function () {
         this.setWidth(clientWidth);
     }
     if (this.worldCanvas.height !== clientHeight) {
-	clientHeight-= 220;
+	clientHeight-= 120;
         this.worldCanvas.height = clientHeight;
         this.setHeight(clientHeight);
     }
-    this.resizeChildren();
-    
+    this.resizeChildren();    
 };
 
 WorldMorph.prototype.resizeChildren = function () {
