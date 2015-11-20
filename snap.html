@@ -21,9 +21,11 @@
 		<script type="text/javascript">
 			var world;
 			window.onload = function () {
-				world = new WorldMorph(document.getElementById('world'));
+				world = new WorldMorph(document.getElementById('world'), false);
                 world.worldCanvas.focus();
 				new IDE_Morph().openIn(world);
+				world.fillPage();
+				//world.resizeChildren();
 				setInterval(loop, 1);
 			};
 			function loop() {
@@ -32,6 +34,7 @@
 		</script>
 	</head>
 	<body style="margin: 0;">
-		<canvas id="world" tabindex="1" style="position: absolute;" />
+		<div>Hello World</div>
+		<canvas id="world"/>
 	</body>
 </html>
