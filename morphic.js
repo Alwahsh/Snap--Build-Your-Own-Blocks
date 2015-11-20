@@ -10180,10 +10180,9 @@ WorldMorph.prototype.doOneCycle = function () {
 WorldMorph.prototype.fillPage = function () {
     var pos = getDocumentPositionOf(this.worldCanvas),
         clientHeight = window.innerHeight,
-        clientWidth = window.innerWidth,
-        myself = this;
+        clientWidth = window.innerWidth
 
-
+/*
     if (pos.x > 0) {
         this.worldCanvas.style.position = "absolute";
         this.worldCanvas.style.left = "0px";
@@ -10194,6 +10193,7 @@ WorldMorph.prototype.fillPage = function () {
         this.worldCanvas.style.top = "0px";
         pos.y = 0;
     }
+*/
     if (document.documentElement.scrollTop) {
         // scrolled down b/c of viewport scaling
         clientHeight = document.documentElement.clientHeight;
@@ -10203,19 +10203,27 @@ WorldMorph.prototype.fillPage = function () {
         clientWidth = document.documentElement.clientWidth;
     }
     if (this.worldCanvas.width !== clientWidth) {
+	clientWidth-= 100;
         this.worldCanvas.width = clientWidth;
         this.setWidth(clientWidth);
     }
     if (this.worldCanvas.height !== clientHeight) {
+	clientHeight-= 220;
         this.worldCanvas.height = clientHeight;
         this.setHeight(clientHeight);
     }
-    this.children.forEach(function (child) {
-        if (child.reactToWorldResize) {
-            child.reactToWorldResize(myself.bounds.copy());
-        }
-    });
+    this.resizeChildren();
+    
 };
+
+WorldMorph.prototype.resizeChildren = function () {
+  var myself = this;
+  this.children.forEach(function (child) {
+      if (child.reactToWorldResize) {
+	  child.reactToWorldResize(myself.bounds.copy());
+      }
+  });
+}
 
 // WorldMorph global pixel access:
 
