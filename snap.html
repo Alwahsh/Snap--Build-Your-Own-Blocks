@@ -22,7 +22,7 @@
 			var world;
 			window.onload = function () {
 				world = new WorldMorph(document.getElementById('world'), false);
-                world.worldCanvas.focus();
+				world.worldCanvas.focus();
 				new IDE_Morph().openIn(world);
 				world.resize(2200,760);
 				//world.resizeChildren();
@@ -35,7 +35,7 @@
 	</head>
 	<body style="margin: 0;">
 		<div>Hello World</div>
-		<canvas id="world"/>
+		<canvas tabindex="1" id="world"/>
 		
 	</body>
 </html>
