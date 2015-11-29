@@ -997,6 +997,7 @@ IDE_Morph.prototype.createStage = function () {
         );
         this.stage.add(this.currentSprite);
     }
+    //TODO: This adds the stage. comment it to remove the stage.
     this.add(this.stage);
 };
 
@@ -2021,21 +2022,6 @@ IDE_Morph.prototype.snapMenu = function () {
         'Reference manual',
         function () {
             window.open('help/SnapManual.pdf', 'SnapReferenceManual');
-        }
-    );
-    menu.addItem(
-        'Snap! website',
-        function () {
-            window.open('http://snap.berkeley.edu/', 'SnapWebsite');
-        }
-    );
-    menu.addItem(
-        'Download source',
-        function () {
-            window.open(
-                'http://snap.berkeley.edu/snapsource/snap.zip',
-                'SnapSource'
-            );
         }
     );
     if (world.isDevMode) {

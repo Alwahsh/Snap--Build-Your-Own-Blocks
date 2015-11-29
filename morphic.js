@@ -10480,7 +10480,8 @@ WorldMorph.prototype.initEventListeners = function () {
         },
         false
     );
-
+    //TODO: The confirm navigation thing.
+    /*
     window.onbeforeunload = function (evt) {
         var e = evt || window.event,
             msg = "Are you sure you want to leave?";
@@ -10491,6 +10492,7 @@ WorldMorph.prototype.initEventListeners = function () {
         // For Safari / chrome
         return msg;
     };
+    */
 };
 
 WorldMorph.prototype.mouseDownLeft = function () {
