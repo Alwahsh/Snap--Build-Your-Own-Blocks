@@ -155,6 +155,7 @@ SpriteMorph.uber = PenMorph.prototype;
 
 SpriteMorph.prototype.categories =
     [
+    //TODO: HIDE CATEGORIES HERE
         'motion',
         'control',
         'looks',
