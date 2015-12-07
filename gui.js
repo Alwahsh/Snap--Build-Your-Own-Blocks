@@ -3995,24 +3995,6 @@ IDE_Morph.prototype.languageMenu = function () {
     menu.popup(world, pos);
 };
 
-var getJSON = function(url) {
-  return new Promise(function(resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('get', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-      var status = xhr.status;
-      if (status == 200) {
-        resolve(xhr.response);
-      } else {
-        reject(status);
-      }
-    };
-    xhr.send();
-  });
-};
-
-
 IDE_Morph.prototype.setLanguage = function (lang, callback) {
     var translation = document.getElementById('language'),
         src = 'langs/' + lang + '.json',
