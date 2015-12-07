@@ -4115,6 +4115,7 @@ var getJSON = function(url) {
   });
 };
 
+
 IDE_Morph.prototype.setLanguage = function (lang, callback) {
     var translation = document.getElementById('language'),
         src = 'langs/' + lang + '.json',
@@ -4129,14 +4130,15 @@ IDE_Morph.prototype.setLanguage = function (lang, callback) {
     translation = document.createElement('script');
     translation.id = 'language';
     document.head.appendChild(translation);
-    getJSON(src).then(function(response) {
-     translation.innerHTML = "SnapTranslator.dict." + lang + " = " + JSON.stringify(response);
-     myself.reflectLanguage(lang, callback);
-     //alert(Object.keys(response));
-    }, function(error) {
-      console.error("Failed!", error);
-    });
-    //translation.body = JSON.parse(JSON.stringify(getURL(src)));
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+	translation.innerHTML = "SnapTranslator.dict." + lang + " = " + xhttp.responseText;
+	myself.reflectLanguage(lang, callback);
+      }
+    };
+    xhttp.open("GET", src, true);
+    xhttp.send();
 };
 
 IDE_Morph.prototype.reflectLanguage = function (lang, callback) {
