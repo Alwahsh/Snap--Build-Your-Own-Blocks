@@ -110,7 +110,7 @@ IDE_Morph.uber = Morph.prototype;
 
 IDE_Morph.prototype.setDefaultDesign = function () {
     MorphicPreferences.isFlat = false;
-    SpriteMorph.prototype.paletteColor = new Color(55, 55, 55);
+    SpriteMorph.prototype.paletteColor = new Color(5, 90, 127);
     SpriteMorph.prototype.paletteTextColor = new Color(230, 230, 230);
     StageMorph.prototype.paletteTextColor
         = SpriteMorph.prototype.paletteTextColor;
@@ -498,7 +498,7 @@ IDE_Morph.prototype.createLogo = function () {
     }
 
     this.logo = new Morph();
-    this.logo.texture = 'snap_logo_sm.png';
+    this.logo.texture = 'logo-sm.png';
     this.logo.drawNew = function () {
         this.image = newCanvas(this.extent());
         var context = this.image.getContext('2d'),
@@ -533,7 +533,7 @@ IDE_Morph.prototype.createLogo = function () {
     };
 
     this.logo.color = new Color();
-    this.logo.setExtent(new Point(200, 28)); // dimensions are fixed
+    this.logo.setExtent(new Point(200, 60)); // dimensions are fixed
     this.add(this.logo);
 };
 
@@ -575,8 +575,8 @@ IDE_Morph.prototype.createControlBar = function () {
         myself, // the IDE is the target
         'toggleStageSize',
         [
-            new SymbolMorph('smallStage', 14),
-            new SymbolMorph('normalStage', 14)
+            new SymbolMorph('smallStage', 30),
+            new SymbolMorph('normalStage', 30)
         ],
         function () {  // query
             return myself.isSmallStage;
@@ -587,7 +587,7 @@ IDE_Morph.prototype.createControlBar = function () {
     button.color = colors[0];
     button.highlightColor = colors[1];
     button.pressColor = colors[2];
-    button.labelMinExtent = new Point(36, 18);
+    button.labelMinExtent = new Point(50, 50);
     button.padding = 0;
     button.labelShadowOffset = new Point(-1, -1);
     button.labelShadowColor = colors[1];
@@ -778,7 +778,7 @@ IDE_Morph.prototype.createControlBar = function () {
     // button.hint = 'cloud operations';
     button.fixLayout();
     cloudButton = button;
-    this.controlBar.add(cloudButton);
+    //this.controlBar.add(cloudButton);
     this.controlBar.cloudButton = cloudButton; // for menu positioning
 
     this.controlBar.fixLayout = function () {
@@ -813,7 +813,7 @@ IDE_Morph.prototype.createControlBar = function () {
         cloudButton.setRight(settingsButton.left() - padding);
 
         projectButton.setCenter(myself.controlBar.center());
-        projectButton.setRight(cloudButton.left() - padding);
+        projectButton.setRight(settingsButton.left() - padding);
 
         this.updateLabel();
     };
@@ -7061,4 +7061,3 @@ StageHandleMorph.prototype.mouseLeave = function () {
     this.image = this.normalImage;
     this.changed();
 };
-
