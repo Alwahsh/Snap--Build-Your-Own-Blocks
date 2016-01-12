@@ -98,7 +98,7 @@ IDE_Morph.uber = Morph.prototype;
 // IDE_Morph preferences settings and skins
 
 IDE_Morph.prototype.setDefaultDesign = function () {
-    MorphicPreferences.isFlat = false;
+    MorphicPreferences.isFlat = true;
     SpriteMorph.prototype.paletteColor = new Color(5, 90, 127);
     SpriteMorph.prototype.paletteTextColor = new Color(230, 230, 230);
     StageMorph.prototype.paletteTextColor
@@ -523,7 +523,7 @@ IDE_Morph.prototype.createLogo = function () {
     };
 
     this.logo.color = new Color();
-    this.logo.setExtent(new Point(200, 60)); // dimensions are fixed
+    this.logo.setExtent(new Point(200, 0)); // dimensions are fixed
     this.add(this.logo);
 };
 
@@ -557,7 +557,7 @@ IDE_Morph.prototype.createControlBar = function () {
     this.controlBar.mouseClickLeft = function () {
         this.world().fillPage();
     };
-    this.add(this.controlBar);
+    //this.add(this.controlBar);
 
     //smallStageButton
     button = new ToggleButtonMorph(
@@ -1032,7 +1032,8 @@ IDE_Morph.prototype.createSpriteBar = function () {
 
     this.spriteBar = new Morph();
     this.spriteBar.color = this.frameColor;
-    this.add(this.spriteBar);
+    //TODO: put workspace text here.
+    //this.add(this.spriteBar);
 
     function addRotationStyleButton(rotationStyle) {
         var colors = myself.rotationStyleColors,
@@ -1320,7 +1321,7 @@ IDE_Morph.prototype.createCorralBar = function () {
     this.corralBar = new Morph();
     this.corralBar.color = this.frameColor;
     this.corralBar.setHeight(this.logo.height()); // height is fixed
-    this.add(this.corralBar);
+    //this.add(this.corralBar);
 
     // new sprite button
     newbutton = new PushButtonMorph(
@@ -1381,7 +1382,8 @@ IDE_Morph.prototype.createCorral = function () {
 
     this.corral = new Morph();
     this.corral.color = this.groupColor;
-    this.add(this.corral);
+    //TODO: BOTTOM OF STAGE.
+    //this.add(this.corral);
 
     this.corral.stageIcon = new SpriteIconMorph(this.stage);
     this.corral.stageIcon.isDraggable = false;
@@ -1516,7 +1518,7 @@ IDE_Morph.prototype.fixLayout = function (situation) {
         this.spriteBar.setPosition(this.logo.bottomRight().add(padding));
         this.spriteBar.setExtent(new Point(
             Math.max(0, this.stage.left() - padding - this.spriteBar.left()),
-            this.categories.bottom() - this.spriteBar.top() - padding
+            0 // TODO: The spriteBar height = 0.
         ));
         this.spriteBar.fixLayout();
 
