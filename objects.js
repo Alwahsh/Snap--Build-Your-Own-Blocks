@@ -125,7 +125,7 @@ PrototypeHatBlockMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.objects = '2015-November-16';
+modules.objects = '2015-December-22';
 
 var SpriteMorph;
 var StageMorph;
@@ -570,6 +570,12 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'pen',
             spec: 'stamp'
         },
+        floodFill: {
+            only: SpriteMorph,
+            type: 'command',
+            category: 'pen',
+            spec: 'fill'
+        },
 
         // Control
         receiveGo: {
@@ -584,7 +590,7 @@ SpriteMorph.prototype.initBlocks = function () {
         },
 
     /* migrated to a newer block version:
-  
+
         receiveClick: {
             type: 'hat',
             category: 'control',
@@ -602,6 +608,11 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'hat',
             category: 'control',
             spec: 'when I receive %msgHat'
+        },
+        receiveCondition: {
+            type: 'hat',
+            category: 'control',
+            spec: 'when %b'
         },
         doBroadcast: {
             type: 'command',
@@ -1862,12 +1873,14 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('setSize'));
         blocks.push('-');
         blocks.push(block('doStamp'));
+        blocks.push(block('floodFill'));
 
     } else if (cat === 'control') {
 
         blocks.push(block('receiveGo'));
         blocks.push(block('receiveKey'));
         blocks.push(block('receiveInteraction'));
+        blocks.push(block('receiveCondition'));
         blocks.push(block('receiveMessage'));
         blocks.push('-');
         blocks.push(block('doBroadcast'));
@@ -3351,6 +3364,60 @@ SpriteMorph.prototype.drawLine = function (start, dest) {
     }
 };
 
+SpriteMorph.prototype.floodFill = function () {
+    var layer = this.parent.penTrails(),
+        width = layer.width,
+        height = layer.height,
+        ctx = layer.getContext('2d'),
+        img = ctx.getImageData(0, 0, width, height),
+        dta = img.data,
+        stack = [
+            ((height / 2) - Math.round(this.yPosition())) * width +
+            Math.round(this.xPosition() + (width / 2))
+        ],
+        current,
+        src;
+
+    function read(p) {
+        var d = p * 4;
+        return [dta[d], dta[d + 1], dta[d + 2], dta[d + 3]];
+    }
+
+    function check(p) {
+        return p[0] === src[0] &&
+            p[1] === src[1] &&
+            p[2] === src[2] &&
+            p[3] === src[3];
+    }
+
+    src = read(stack[0]);
+    if (src[0] === Math.round(this.color.r) &&
+            src[1] === Math.round(this.color.g) &&
+            src[2] === Math.round(this.color.b) &&
+            src[3] === Math.round(this.color.a * 255)) {
+        return;
+    }
+    while (stack.length > 0) {
+        current = stack.pop();
+        if (check(read(current))) {
+            if (current % width > 1) {
+                stack.push(current + 1);
+                stack.push(current - 1);
+            }
+            if (current > 0 && current < height * width) {
+                stack.push(current + width);
+                stack.push(current - width);
+            }
+        }
+        dta[current * 4] = Math.round(this.color.r);
+        dta[current * 4 + 1] = Math.round(this.color.g);
+        dta[current * 4 + 2] = Math.round(this.color.b);
+        dta[current * 4 + 3] = Math.round(this.color.a * 255);
+    }
+    ctx.putImageData(img, 0, 0);
+    this.parent.changed();
+};
+
 // SpriteMorph motion - adjustments due to nesting
 
 SpriteMorph.prototype.moveBy = function (delta, justMe) {
@@ -3467,10 +3534,14 @@ SpriteMorph.prototype.setHeading = function (degrees) {
         turn = dir - this.heading;
 
     // apply to myself
-    this.changed();
-    SpriteMorph.uber.setHeading.call(this, dir);
-    this.silentGotoXY(x, y, true); // just me
-    this.positionTalkBubble();
+    if (this.rotationStyle) { // optimization, only redraw if rotatable
+        this.changed();
+        SpriteMorph.uber.setHeading.call(this, dir);
+        this.silentGotoXY(x, y, true); // just me
+        this.positionTalkBubble();
+    } else {
+        this.heading = parseFloat(degrees) % 360;
+    }
 
     // propagate to my parts
     this.parts.forEach(function (part) {
@@ -3676,7 +3747,7 @@ SpriteMorph.prototype.allHatBlocksForKey = function (key) {
         if (morph.selector) {
             if (morph.selector === 'receiveKey') {
                 var evt = morph.inputs()[0].evaluate()[0];
-                return evt === key || evt === 'any';
+                return evt === key || evt === 'any key';
             }
         }
         return false;
@@ -3689,6 +3760,15 @@ SpriteMorph.prototype.allHatBlocksForInteraction = function (interaction) {
             if (morph.selector === 'receiveInteraction') {
                 return morph.inputs()[0].evaluate()[0] === interaction;
             }
+        }
+        return false;
+    });
+};
+
+SpriteMorph.prototype.allGenericHatBlocks = function () {
+    return this.scripts.children.filter(function (morph) {
+        if (morph.selector) {
+            return morph.selector === 'receiveCondition';
         }
         return false;
     });
@@ -4675,7 +4755,6 @@ StageMorph.prototype.hiddenPrimitives = {};
 StageMorph.prototype.codeMappings = {};
 StageMorph.prototype.codeHeaders = {};
 StageMorph.prototype.enableCodeMapping = false;
-
 StageMorph.prototype.enableInheritance = false;
 
 // StageMorph instance creation
@@ -4696,6 +4775,7 @@ StageMorph.prototype.init = function (globals) {
     this.sounds = new List();
     this.version = Date.now(); // for observers
     this.isFastTracked = false;
+    this.enableCustomHatBlocks = true;
     this.cloneCount = 0;
 
     this.timerStart = Date.now();
@@ -5037,6 +5117,9 @@ StageMorph.prototype.step = function () {
     }
 
     // manage threads
+    if (this.enableCustomHatBlocks) {
+        this.stepGenericConditions();
+    }
     if (this.isFastTracked && this.threads.processes.length) {
         this.children.forEach(function (morph) {
             if (morph instanceof SpriteMorph) {
@@ -5071,6 +5154,28 @@ StageMorph.prototype.step = function () {
         });
         this.lastWatcherUpdate = Date.now();
     }
+};
+
+StageMorph.prototype.stepGenericConditions = function (stopAll) {
+    var hats = [],
+        myself = this,
+        ide;
+    this.children.concat(this).forEach(function (morph) {
+        if (morph instanceof SpriteMorph || morph instanceof StageMorph) {
+            hats = hats.concat(morph.allGenericHatBlocks());
+        }
+    });
+    if (!hats.length) {
+        this.enableCustomHatBlocks = false;
+        ide = this.parentThatIsA(IDE_Morph);
+        if (ide) {
+            ide.controlBar.stopButton.refresh();
+        }
+        return;
+    }
+    hats.forEach(function (block) {
+        myself.threads.doWhen(block, stopAll);
+    });
 };
 
 StageMorph.prototype.developersMenu = function () {
@@ -5431,6 +5536,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('receiveGo'));
         blocks.push(block('receiveKey'));
         blocks.push(block('receiveInteraction'));
+        blocks.push(block('receiveCondition'));
         blocks.push(block('receiveMessage'));
         blocks.push('-');
         blocks.push(block('doBroadcast'));
@@ -5738,7 +5844,11 @@ StageMorph.prototype.userMenu = function () {
     menu.addItem(
         "pic...",
         function () {
-            window.open(myself.fullImageClassic().toDataURL());
+            ide.saveCanvasAs(
+                myself.fullImageClassic(),
+                myself.name,
+                true // open as new window
+            );
         },
         'open a new window\nwith a picture of the stage'
     );
@@ -5984,6 +6094,9 @@ StageMorph.prototype.allHatBlocksForKey
 
 StageMorph.prototype.allHatBlocksForInteraction
     = SpriteMorph.prototype.allHatBlocksForInteraction;
+
+StageMorph.prototype.allGenericHatBlocks
+    = SpriteMorph.prototype.allGenericHatBlocks;
 
 // StageMorph events
 
@@ -6331,11 +6444,10 @@ Costume.prototype.shrinkWrap = function () {
     this.version = Date.now();
 };
 
-Costume.prototype.boundingBox = function () {
+Costume.prototype.canvasBoundingBox = function (pic) {
     // answer the rectangle surrounding my contents' non-transparent pixels
     var row,
         col,
-        pic = this.contents,
         w = pic.width,
         h = pic.height,
         ctx = pic.getContext('2d'),
@@ -6390,6 +6502,10 @@ Costume.prototype.boundingBox = function () {
     }
 
     return new Rectangle(getLeft(), getTop(), getRight(), getBottom());
+};
+
+Costume.prototype.boundingBox = function () {
+    return this.canvasBoundingBox(this.contents);
 };
 
 // Costume duplication
@@ -7622,9 +7738,11 @@ WatcherMorph.prototype.userMenu = function () {
             menu.addItem(
                 'export...',
                 function () {
-                    window.open(
-                        'data:text/plain;charset=utf-8,' +
-                            encodeURIComponent(this.currentValue.toString())
+                    var ide = myself.parentThatIsA(IDE_Morph);
+                    ide.saveFileAs(
+                        myself.currentValue.toString(),
+                        'text/plain;charset=utf-8',
+                        myself.getter // variable name
                     );
                 }
             );
