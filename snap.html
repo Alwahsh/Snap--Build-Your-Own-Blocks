@@ -5,6 +5,9 @@
 		<title>Snap! Build Your Own Blocks</title>
 		<link rel="shortcut icon" href="favicon.ico">
 		<script type="text/javascript"> var promptBeforeExit = false; </script>
+		<link rel="stylesheet" type="text/css" href="spectrum.css">
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="spectrum.js"></script>
 		<script type="text/javascript" src="morphic.js"></script>
 		<script type="text/javascript" src="widgets.js"></script>
 		<script type="text/javascript" src="blocks.js"></script>
@@ -20,12 +23,23 @@
 		<script type="text/javascript" src="cloud.js"></script>
 		<script type="text/javascript" src="sha512.js"></script>
 		<script type="text/javascript" src="FileSaver.min.js"></script>
+
+	</head>
+	<body style="margin: 0;">
+		<div>
+			<input id='colorpickerBG' />
+			<input id='colorpickerControlBar' />
+		</div>
+		<canvas tabindex="1" id="world"/>
+
 		<script type="text/javascript">
 			var world;
+			var futureMorph;
 			window.onload = function () {
 				world = new WorldMorph(document.getElementById('world'), false);
 				world.worldCanvas.focus();
-				new IDE_Morph().openIn(world);
+				futureMorph = new IDE_Morph();
+				futureMorph.openIn(world);
 				world.resize(1300,560);
 				//world.resizeChildren();
 				setInterval(loop, 1);
@@ -34,11 +48,26 @@
         requestAnimationFrame(loop);
 				world.doOneCycle();
 			}
+			$("#colorpickerBG").spectrum({
+	    	flat: true,
+	    	showInput: true,
+				move: function(color) {
+					futureMorph.setColor(new Color(color._r, color._g, color._b));
+					//futureMorph.setDefaultDesign();
+					//futureMorph.openIn(world);
+				}
+	    });
+
+			$("#colorpickerControlBar").spectrum({
+	    	flat: true,
+	    	showInput: true,
+				move: function(color) {
+					futureMorph.controlBar.setColor(new Color(color._r, color._g, color._b));
+					//futureMorph.setDefaultDesign();
+					//futureMorph.openIn(world);
+				}
+	    });
 		</script>
-	</head>
-	<body style="margin: 0;">
-		<div>Hello World</div>
-		<canvas tabindex="1" id="world"/>
-		
+
 	</body>
 </html>
