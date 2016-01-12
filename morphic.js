@@ -10435,6 +10435,8 @@ WorldMorph.prototype.initEventListeners = function () {
     );
 
     window.onbeforeunload = function (evt) {
+	if (!promptBeforeExit)
+	  return;
         var e = evt || window.event,
             msg = "Are you sure you want to leave?";
         // For IE and Firefox

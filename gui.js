@@ -71,7 +71,7 @@ BlockRemovalDialogMorph*/
 
 // Global stuff ////////////////////////////////////////////////////////
 
-modules.gui = '2015-November-16';
+modules.gui = '2015-December-04';
 
 // Declarations
 
@@ -4026,14 +4026,15 @@ IDE_Morph.prototype.setLanguage = function (lang, callback) {
     translation = document.createElement('script');
     translation.id = 'language';
     document.head.appendChild(translation);
-    getJSON(src).then(function(response) {
-     translation.innerHTML = "SnapTranslator.dict." + lang + " = " + JSON.stringify(response);
-     myself.reflectLanguage(lang, callback);
-     //alert(Object.keys(response));
-    }, function(error) {
-      console.error("Failed!", error);
-    });
-    //translation.body = JSON.parse(JSON.stringify(getURL(src)));
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+	translation.innerHTML = "SnapTranslator.dict." + lang + " = " + xhttp.responseText;
+	myself.reflectLanguage(lang, callback);
+      }
+    };
+    xhttp.open("GET", src, true);
+    xhttp.send();
 };
 
 IDE_Morph.prototype.reflectLanguage = function (lang, callback) {
@@ -5293,11 +5294,11 @@ ProjectDialogMorph.prototype.rawOpenCloudProject = function (proj) {
     SnapCloud.reconnect(
         function () {
             SnapCloud.callService(
-                'getProject',
+                'getRawProject',
                 function (response) {
                     SnapCloud.disconnect();
                     myself.ide.source = 'cloud';
-                    myself.ide.droppedText(response[0].SourceCode);
+                    myself.ide.droppedText(response);
                     if (proj.Public === 'true') {
                         location.hash = '#present:Username=' +
                             encodeURIComponent(SnapCloud.username) +
@@ -7076,4 +7077,3 @@ StageHandleMorph.prototype.mouseLeave = function () {
     this.image = this.normalImage;
     this.changed();
 };
-
