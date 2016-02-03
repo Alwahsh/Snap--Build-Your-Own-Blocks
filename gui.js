@@ -3455,6 +3455,7 @@ IDE_Morph.prototype.openProjectString = function (str) {
     ]);
 };
 
+// TODO: LOAD PROJECT BY DEFAULT.
 IDE_Morph.prototype.rawOpenProjectString = function (str) {
     this.toggleAppMode(false);
     this.spriteBar.tabBar.tabTo('scripts');

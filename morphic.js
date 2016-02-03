@@ -4534,7 +4534,7 @@ CursorMorph.prototype.initializeClipboardHandler = function () {
             myself.processKeyDown(event);
             this.value = myself.target.selection();
             this.select();
-            
+
             // Make sure tab prevents default
             if (event.keyIdentifier === 'U+0009' ||
                     event.keyIdentifier === 'Tab') {
@@ -4544,7 +4544,7 @@ CursorMorph.prototype.initializeClipboardHandler = function () {
         },
         false
     );
-    
+
     this.clipboardHandler.addEventListener(
         'input',
         function (event) {
@@ -10181,7 +10181,7 @@ WorldMorph.prototype.doOneCycle = function () {
 // resizes the world to fill a certain width and height.
 WorldMorph.prototype.resize = function (clientWidth, clientHeight) {
     var pos = getDocumentPositionOf(this.worldCanvas)
-    
+
     if (this.worldCanvas.width !== clientWidth) {
         this.worldCanvas.width = clientWidth;
         this.setWidth(clientWidth);
@@ -10190,7 +10190,7 @@ WorldMorph.prototype.resize = function (clientWidth, clientHeight) {
         this.worldCanvas.height = clientHeight;
         this.setHeight(clientHeight);
     }
-    this.resizeChildren();    
+    this.resizeChildren();
 };
 
 WorldMorph.prototype.fillPage = function () {
@@ -10228,7 +10228,7 @@ WorldMorph.prototype.fillPage = function () {
         this.worldCanvas.height = clientHeight;
         this.setHeight(clientHeight);
     }
-    this.resizeChildren();    
+    this.resizeChildren();
 };
 
 WorldMorph.prototype.resizeChildren = function () {

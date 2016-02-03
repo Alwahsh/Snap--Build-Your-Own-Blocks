@@ -40,6 +40,15 @@
 				world.worldCanvas.focus();
 				futureMorph = new IDE_Morph();
 				futureMorph.openIn(world);
+				var xhttp = new XMLHttpRequest();
+		    xhttp.onreadystatechange = function() {
+					document.xxx = xhttp;
+		      if (xhttp.readyState == 4 && xhttp.status == 200) {
+						futureMorph.rawOpenProjectString(xhttp.responseText)
+		      }
+		    };
+		    xhttp.open("GET", "test.xml", true);
+		    xhttp.send();
 				world.resize(1300,560);
 				//world.resizeChildren();
 				setInterval(loop, 1);
