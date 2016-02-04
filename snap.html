@@ -4,7 +4,25 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Snap! Build Your Own Blocks</title>
 		<link rel="shortcut icon" href="favicon.ico">
-		<script type="text/javascript"> var promptBeforeExit = false; </script>
+		<script type="text/javascript">
+			// Settings.
+			var promptBeforeExit = false;
+			/*
+			var availableCategories = [
+	        'motion',
+	        'control',
+	        'looks',
+	        'sensing',
+	        'sound',
+	        'operators',
+	        'pen',
+	        'variables',
+	        'lists',
+	        'other'
+	    ];
+			*/
+			var availableCategories = ['motion'];
+		</script>
 		<script type="text/javascript" src="morphic.js"></script>
 		<script type="text/javascript" src="widgets.js"></script>
 		<script type="text/javascript" src="blocks.js"></script>
@@ -34,6 +52,7 @@
 		      if (xhttp.readyState == 4 && xhttp.status == 200) {
 						futureMorph.rawOpenProjectString(xhttp.responseText);
 						futureMorph.stage.fireGreenFlagEvent();
+						futureMorph.selectSprite(futureMorph.sprites.contents[1]);
 		      }
 		    };
 		    xhttp.open("GET", "test.xml", true);

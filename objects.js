@@ -153,20 +153,8 @@ SpriteMorph.uber = PenMorph.prototype;
 
 // SpriteMorph settings
 
-SpriteMorph.prototype.categories =
-    [
-    //TODO: HIDE CATEGORIES HERE
-        'motion',
-        'control',
-        'looks',
-        'sensing',
-        'sound',
-        'operators',
-        'pen',
-        'variables',
-        'lists',
-        'other'
-    ];
+//TODO: HIDE CATEGORIES HERE
+SpriteMorph.prototype.categories = availableCategories;
 
 SpriteMorph.prototype.blockColor = {
     motion : new Color(74, 108, 212),
