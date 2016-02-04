@@ -11179,7 +11179,7 @@ CommentMorph.prototype.fixLayout = function () {
 CommentMorph.prototype.userMenu = function () {
     var menu = new MenuMorph(this),
         myself = this;
-
+    return menu;
     menu.addItem(
         "duplicate",
         function () {

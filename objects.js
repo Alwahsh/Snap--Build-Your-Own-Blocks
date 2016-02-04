@@ -5822,42 +5822,6 @@ StageMorph.prototype.userMenu = function () {
         menu = new MenuMorph(this),
         shiftClicked = this.world().currentKey === 16,
         myself = this;
-
-    if (ide && ide.isAppMode) {
-        // menu.addItem('help', 'nop');
-        return menu;
-    }
-    menu.addItem("edit", 'edit');
-    menu.addItem("show all", 'showAll');
-    menu.addItem(
-        "pic...",
-        function () {
-            ide.saveCanvasAs(
-                myself.fullImageClassic(),
-                myself.name,
-                true // open as new window
-            );
-        },
-        'open a new window\nwith a picture of the stage'
-    );
-    if (shiftClicked) {
-        menu.addLine();
-        menu.addItem(
-            "turn pen trails into new costume...",
-            function () {
-                var costume = new Costume(
-                    myself.trailsCanvas,
-                    Date.now().toString()
-                ).copy();
-                ide.currentSprite.addCostume(costume);
-                ide.currentSprite.wearCostume(costume);
-                ide.hasChangedMedia = true;
-            },
-            'turn all pen trails and stamps\n' +
-                'into a new costume for the\ncurrently selected sprite',
-            new Color(100, 0, 0)
-        );
-    }
     return menu;
 };
 
