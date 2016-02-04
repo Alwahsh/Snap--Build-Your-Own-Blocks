@@ -1008,7 +1008,7 @@ IDE_Morph.prototype.createStageHandle = function () {
     // assumes that the stage has already been created
     if (this.stageHandle) {this.stageHandle.destroy(); }
     this.stageHandle = new StageHandleMorph(this.stage);
-    this.add(this.stageHandle);
+    //this.add(this.stageHandle);
 };
 
 IDE_Morph.prototype.createSpriteBar = function () {
@@ -1299,7 +1299,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
                 droppedMorph.destroy();
             }
         };
-        this.add(this.spriteEditor);
+        //this.add(this.spriteEditor);
     }
 };
 
