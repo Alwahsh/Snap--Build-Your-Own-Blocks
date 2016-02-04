@@ -5,8 +5,6 @@
 		<title>Snap! Build Your Own Blocks</title>
 		<link rel="shortcut icon" href="favicon.ico">
 		<script type="text/javascript"> var promptBeforeExit = false; </script>
-		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="spectrum.js"></script>
 		<script type="text/javascript" src="morphic.js"></script>
 		<script type="text/javascript" src="widgets.js"></script>
 		<script type="text/javascript" src="blocks.js"></script>
@@ -22,11 +20,6 @@
 		<script type="text/javascript" src="cloud.js"></script>
 		<script type="text/javascript" src="sha512.js"></script>
 		<script type="text/javascript" src="FileSaver.min.js"></script>
-
-	</head>
-	<body style="margin: 0;">
-		<canvas tabindex="1" id="world"/>
-
 		<script type="text/javascript">
 			var world;
 			var futureMorph;
@@ -49,10 +42,15 @@
 				setInterval(loop, 1);
 			};
 			function loop() {
-        requestAnimationFrame(loop);
 				world.doOneCycle();
 			}
 		</script>
+
+	</head>
+	<body style="margin: 0;">
+		<canvas tabindex="1" id="world"/>
+
+
 
 	</body>
 </html>
