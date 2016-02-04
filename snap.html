@@ -32,7 +32,8 @@
 		    xhttp.onreadystatechange = function() {
 					document.xxx = xhttp;
 		      if (xhttp.readyState == 4 && xhttp.status == 200) {
-						futureMorph.rawOpenProjectString(xhttp.responseText)
+						futureMorph.rawOpenProjectString(xhttp.responseText);
+						futureMorph.stage.fireGreenFlagEvent();
 		      }
 		    };
 		    xhttp.open("GET", "test.xml", true);
