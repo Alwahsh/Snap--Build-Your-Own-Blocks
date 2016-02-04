@@ -2231,7 +2231,7 @@ SpriteMorph.prototype.freshPalette = function (category) {
                         'doReplaceInList'
                     ]
             };
-
+        return menu;
         function hasHiddenPrimitives() {
             var defs = SpriteMorph.prototype.blocks,
                 hiddens = StageMorph.prototype.hiddenPrimitives;
