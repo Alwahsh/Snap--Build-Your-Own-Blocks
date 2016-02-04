@@ -5425,13 +5425,13 @@ ScriptsMorph.prototype.userMenu = function () {
         myself = this,
         obj = this.owner,
         stage = obj.parentThatIsA(StageMorph);
-
+    return menu;
     if (!ide) {
         blockEditor = this.parentThatIsA(BlockEditorMorph);
         if (blockEditor) {
             ide = blockEditor.target.parentThatIsA(IDE_Morph);
         }
-    }
+    }/*
     menu.addItem('clean up', 'cleanUp', 'arrange scripts\nvertically');
     menu.addItem('add comment', 'addComment');
     if (this.lastDroppedBlock) {
@@ -5474,6 +5474,7 @@ ScriptsMorph.prototype.userMenu = function () {
             }
         );
     }
+    */
     return menu;
 };
 
