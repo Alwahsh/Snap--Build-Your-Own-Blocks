@@ -2217,7 +2217,7 @@ BlockMorph.prototype.userMenu = function () {
         alternatives,
         top,
         blck;
-
+    return menu;
     menu.addItem(
         "help...",
         'showHelp'

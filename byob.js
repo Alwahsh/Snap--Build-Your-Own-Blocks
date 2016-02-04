@@ -862,6 +862,7 @@ CustomCommandBlockMorph.prototype.userMenu = function () {
         }
     } else {
         menu = this.constructor.uber.userMenu.call(this);
+        return menu;
         if (!menu) {
             menu = new MenuMorph(this);
         } else {
