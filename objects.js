@@ -597,6 +597,11 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'control',
             spec: 'when I receive %msgHat'
         },
+        receiveRun: {
+            type: 'hat',
+            category: 'control',
+            spec: 'when I receive %msgHat'
+        },
         receiveCondition: {
             type: 'hat',
             category: 'control',
