@@ -1252,7 +1252,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
 
         this.spriteEditor = new ScrollFrameMorph(
             scripts,
-            null,
+            1, // TODO: SET TO NULL TO HAVE A SCROLLBAR.
             this.sliderColor
         );
         this.spriteEditor.padding = 10;
@@ -1495,7 +1495,7 @@ IDE_Morph.prototype.fixLayout = function (situation) {
 
     // palette
     this.palette.setLeft(this.logo.left());
-    this.palette.setTop(this.logo.bottom());
+    this.palette.setTop(this.logo.bottom()); //TODO: GET BACK CATEGORIES BY SETTING THIS AS this.categories.bottom();
     this.palette.setHeight(this.bottom() - this.palette.top());
 
     if (situation !== 'refreshPalette') {
