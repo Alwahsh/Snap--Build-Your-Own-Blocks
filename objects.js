@@ -608,6 +608,11 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'control',
             spec: 'when I receive %msgHat'
         },
+        receiveRun: {
+            type: 'hat',
+            category: 'control',
+            spec: 'Attach your %msgHat here'
+        },
         receiveCondition: {
             type: 'hat',
             category: 'control',
@@ -1881,6 +1886,7 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('receiveInteraction'));
         blocks.push(block('receiveCondition'));
         blocks.push(block('receiveMessage'));
+        blocks.push(block('receiveRun'));
         blocks.push('-');
         blocks.push(block('doBroadcast'));
         blocks.push(block('doBroadcastAndWait'));
@@ -3703,7 +3709,7 @@ SpriteMorph.prototype.allMessageNames = function () {
         var txt;
         if (morph.selector) {
             if (contains(
-                    ['receiveMessage', 'doBroadcast', 'doBroadcastAndWait'],
+                    ['receiveMessage', 'doBroadcast', 'doBroadcastAndWait', 'receiveRun'],
                     morph.selector
                 )) {
                 txt = morph.inputs()[0].evaluate();
@@ -3723,7 +3729,7 @@ SpriteMorph.prototype.allHatBlocksFor = function (message) {
     return this.scripts.children.filter(function (morph) {
         var event;
         if (morph.selector) {
-            if (morph.selector === 'receiveMessage') {
+            if (morph.selector === 'receiveMessage' || morph.selector === 'receiveRun') {
                 event = morph.inputs()[0].evaluate();
                 return event === message
                     || (event instanceof Array
@@ -5537,6 +5543,7 @@ StageMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('receiveInteraction'));
         blocks.push(block('receiveCondition'));
         blocks.push(block('receiveMessage'));
+        blocks.push(block('receiveRun'));
         blocks.push('-');
         blocks.push(block('doBroadcast'));
         blocks.push(block('doBroadcastAndWait'));
