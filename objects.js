@@ -3718,7 +3718,7 @@ SpriteMorph.prototype.allHatBlocksFor = function (message) {
     return this.scripts.children.filter(function (morph) {
         var event;
         if (morph.selector) {
-            if (morph.selector === 'receiveMessage' || 'receiveRun') {
+            if (morph.selector === 'receiveMessage' || morph.selector === 'receiveRun') {
                 event = morph.inputs()[0].evaluate();
                 return event === message
                     || (event instanceof Array
@@ -5320,6 +5320,25 @@ StageMorph.prototype.fireGreenFlagEvent = function () {
     if (ide) {
         ide.controlBar.pauseButton.refresh();
     }
+    return procs;
+};
+
+StageMorph.prototype.doCustomBroadcastEvent = function (message) {
+    var procs = [],
+        hats = [],
+        myself = this;
+
+    this.children.concat(this).forEach(function (morph) {
+        if (morph instanceof SpriteMorph || morph instanceof StageMorph) {
+            hats = hats.concat(morph.allHatBlocksFor(message));
+        }
+    });
+    hats.forEach(function (block) {
+        procs.push(myself.threads.startProcess(
+            block,
+            myself.isThreadSafe
+        ));
+    });
     return procs;
 };
 

@@ -52,6 +52,7 @@
 		      if (xhttp.readyState == 4 && xhttp.status == 200) {
 						futureMorph.rawOpenProjectString(xhttp.responseText);
 						futureMorph.stage.fireGreenFlagEvent();
+						//TODO: futureMorph.doCustomBroadcastEvent(message) for sending broadcast.
 						futureMorph.selectSprite(futureMorph.sprites.contents[1]);
 		      }
 		    };
