@@ -1059,9 +1059,9 @@ CustomReporterBlockMorph.prototype.refresh = function () {
     this.drawNew();
 };
 
-CustomReporterBlockMorph.prototype.mouseClickLeft = function () {
+CustomReporterBlockMorph.prototype.mouseClickLeft = function (a) {
     if (!this.isPrototype) {
-        return CustomReporterBlockMorph.uber.mouseClickLeft.call(this);
+        return CustomReporterBlockMorph.uber.mouseClickLeft.call(this, a);
     }
     this.edit();
 };

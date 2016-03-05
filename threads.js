@@ -858,15 +858,17 @@ Process.prototype.expectReport = function () {
 Process.prototype.handleError = function (error, element) {
     var m = element;
     this.stop();
-    this.errorFlag = true;
-    this.topBlock.addErrorHighlight();
+    // this.errorFlag = true;
+    //this.topBlock.addErrorHighlight();
     if (isNil(m) || isNil(m.world())) {m = this.topBlock; }
+    /*
     m.showBubble(
         (m === element ? '' : 'Inside: ')
             + error.name
             + '\n'
             + error.message
     );
+    */
 };
 
 Process.prototype.errorObsolete = function () {
