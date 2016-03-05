@@ -3233,7 +3233,9 @@ BlockMorph.prototype.reactToTemplateCopy = function () {
 
 // BlockMorph events
 
-BlockMorph.prototype.mouseClickLeft = function () {
+BlockMorph.prototype.mouseClickLeft = function (run_it) {
+    if ( run_it != true)
+      return;
     var top = this.topBlock(),
         receiver = top.receiver(),
         shiftClicked = this.world().currentKey === 16,

@@ -689,9 +689,9 @@ CustomCommandBlockMorph.prototype.parseSpec = function (spec) {
     return this.definition.parseSpec.call(this, spec);
 };
 
-CustomCommandBlockMorph.prototype.mouseClickLeft = function () {
+CustomCommandBlockMorph.prototype.mouseClickLeft = function (a) {
     if (!this.isPrototype) {
-        return CustomCommandBlockMorph.uber.mouseClickLeft.call(this);
+        return CustomCommandBlockMorph.uber.mouseClickLeft.call(this, a);
     }
     this.edit();
 };
