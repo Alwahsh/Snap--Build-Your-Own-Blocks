@@ -1844,7 +1844,7 @@ IDE_Morph.prototype.refreshIDE = function () {
 
 IDE_Morph.prototype.applySavedSettings = function () {
     var design = this.getSetting('design'),
-        zoom = this.getSetting('zoom'),
+        zoom = 2,
         language = this.getSetting('language'),
         click = this.getSetting('click'),
         longform = this.getSetting('longform'),
