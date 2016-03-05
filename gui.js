@@ -1275,7 +1275,7 @@ IDE_Morph.prototype.createSpriteEditor = function () {
         this.spriteEditor.updateSelection();
 
         this.spriteEditor.acceptsDrops = false;
-        this.spriteEditor.contents.acceptsDrops = false;
+        this.spriteEditor.contents.acceptsDrops = true;
     } else if (this.currentTab === 'sounds') {
         this.spriteEditor = new JukeboxMorph(
             this.currentSprite,
