@@ -6286,7 +6286,7 @@ RingCommandSlotMorph.prototype.drawNew = function () {
     context.fillStyle = this.cachedClr;
 
     // draw the 'flat' shape:
-    this.drawFlat(context);
+    //this.drawFlat(context);
 
     if (MorphicPreferences.isFlat) {return; }
 
