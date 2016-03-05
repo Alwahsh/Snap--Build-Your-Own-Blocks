@@ -8801,7 +8801,7 @@ ScrollFrameMorph.prototype.init = function (scroller, size, sliderColor) {
     ScrollFrameMorph.uber.init.call(this);
     this.scrollBarSize = size || MorphicPreferences.scrollBarSize;
     this.autoScrollTrigger = null;
-    this.isScrollingByDragging = true;    // change if desired
+    this.isScrollingByDragging = false;    // change if desired
     this.hasVelocity = true; // dto.
     this.padding = 0; // around the scrollable area
     this.growth = 0; // pixels or Point to grow right/left when near edge

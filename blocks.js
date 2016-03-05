@@ -6265,7 +6265,7 @@ RingCommandSlotMorph.prototype.init = function (silently) {
     RingCommandSlotMorph.uber.init.call(this, silently);
     this.isHole = true;
     this.noticesTransparentClick = true;
-    this.color = new Color(0, 17, 173);
+    this.color = new Color(255, 17, 173);
     this.alpha = RingMorph.prototype.alpha;
     this.contrast = RingMorph.prototype.contrast;
 };
